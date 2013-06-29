@@ -26,6 +26,8 @@
     if (activityIndicator == nil) {
         activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:activityStyle];
         
+        activityIndicator.autoresizingMask = UIViewAutoresizingNone;
+        
         //calculate the correct position
         float width = activityIndicator.frame.size.width;
         float height = activityIndicator.frame.size.height;
