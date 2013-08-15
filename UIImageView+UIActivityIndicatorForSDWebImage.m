@@ -25,17 +25,27 @@
     UIActivityIndicatorView *activityIndicator = (UIActivityIndicatorView *)[self viewWithTag:TAG_ACTIVITY_INDICATOR];
     if (activityIndicator == nil) {
         activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:activityStyle];
-        
-        //calculate the correct position
-        float width = activityIndicator.frame.size.width;
-        float height = activityIndicator.frame.size.height;
-        float x = (self.frame.size.width / 2.0) - width/2;
-        float y = (self.frame.size.height / 2.0) - height/2;
-        activityIndicator.frame = CGRectMake(x, y, width, height);
-        
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = NO;
         activityIndicator.hidesWhenStopped = YES;
         activityIndicator.tag = TAG_ACTIVITY_INDICATOR;
         [self addSubview:activityIndicator];
+        
+        // center it
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:self
+                                                         attribute:NSLayoutAttributeCenterX
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:activityIndicator
+                                                         attribute:NSLayoutAttributeCenterX
+                                                        multiplier:1
+                                                          constant:0]];
+                                                          
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:self
+                                                         attribute:NSLayoutAttributeCenterY
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:activityIndicator
+                                                         attribute:NSLayoutAttributeCenterY
+                                                        multiplier:1
+                                                          constant:0]];
     }
     
     [activityIndicator startAnimating];
