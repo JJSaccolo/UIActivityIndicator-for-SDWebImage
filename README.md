@@ -33,6 +33,12 @@ So all the methods available are:
     - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletedBlock)completedBlock usingActivityIndicatorStyle:(UIActivityIndicatorViewStyle)activityStyle;
 
 
+**Remove the activity indicator**
+
+Sometimes it's useful to remove the activity indicator (for example when you call `cancelCurrentImageLoad` on the UIImageView). 
+From now on the method `removeActivityIndicator` is public: fell free to use it! 
+
+
 Why?
 -----------
 
