@@ -9,9 +9,7 @@
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 #import <objc/runtime.h>
 
-static char STRING_KEY;
-
-#define TAG_ACTIVITY_INDICATOR 149462
+static char TAG_ACTIVITY_INDICATOR;
 
 @interface UIImageView (Private)
 
@@ -25,11 +23,11 @@ static char STRING_KEY;
 @dynamic activityIndicator;
 
 - (UIActivityIndicatorView *)activityIndicator {
-    return (UIActivityIndicatorView *)objc_getAssociatedObject(self, &STRING_KEY);
+    return (UIActivityIndicatorView *)objc_getAssociatedObject(self, &TAG_ACTIVITY_INDICATOR);
 }
 
 - (void)setActivityIndicator:(UIActivityIndicatorView *)activityIndicator {
-    objc_setAssociatedObject(self, &STRING_KEY, activityIndicator, OBJC_ASSOCIATION_RETAIN);
+    objc_setAssociatedObject(self, &TAG_ACTIVITY_INDICATOR, activityIndicator, OBJC_ASSOCIATION_RETAIN);
 }
 
 -(void) createActivityIndicatorWithStyle:(UIActivityIndicatorViewStyle) activityStyle {
@@ -37,7 +35,7 @@ static char STRING_KEY;
     if ([self activityIndicator] == nil) {
         self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:activityStyle];
         
-        activityIndicator.autoresizingMask = UIViewAutoresizingNone;
+        self.activityIndicator.autoresizingMask = UIViewAutoresizingNone;
         
         //calculate the correct position
         float width = self.activityIndicator.frame.size.width;
@@ -47,7 +45,6 @@ static char STRING_KEY;
         self.activityIndicator.frame = CGRectMake(x, y, width, height);
         
         self.activityIndicator.hidesWhenStopped = YES;
-        self.activityIndicator.tag = TAG_ACTIVITY_INDICATOR;
         [self addSubview:self.activityIndicator];
     }
     
@@ -56,16 +53,12 @@ static char STRING_KEY;
 }
 
 -(void) removeActivityIndicator {
-    
-    //    self.activityIndicator = (UIActivityIndicatorView *)[self viewWithTag:TAG_ACTIVITY_INDICATOR];
     if ([self activityIndicator]) {
         [[self activityIndicator] removeFromSuperview];
     }
-    
 }
 
 #pragma mark - Methods
-
 
 -(void) setImageWithURL:(NSURL *)url usingActivityIndicatorStyle:(UIActivityIndicatorViewStyle)activityStyle {
     
@@ -78,7 +71,6 @@ static char STRING_KEY;
                     [weakSelf removeActivityIndicator];
                 }
      ];
-    
 }
 
 -(void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder usingActivityIndicatorStyle:(UIActivityIndicatorViewStyle)activityStye {
@@ -92,7 +84,6 @@ static char STRING_KEY;
                     [weakSelf removeActivityIndicator];
                 }
      ];
-    
 }
 
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options usingActivityIndicatorStyle:(UIActivityIndicatorViewStyle)activityStyle{
@@ -107,7 +98,6 @@ static char STRING_KEY;
                     [weakSelf removeActivityIndicator];
                 }
      ];
-    
 }
 
 - (void)setImageWithURL:(NSURL *)url completed:(SDWebImageCompletedBlock)completedBlock usingActivityIndicatorStyle:(UIActivityIndicatorViewStyle)activityStyle {
@@ -121,7 +111,6 @@ static char STRING_KEY;
                     [weakSelf removeActivityIndicator];
                 }
      ];
-    
 }
 
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(SDWebImageCompletedBlock)completedBlock usingActivityIndicatorStyle:(UIActivityIndicatorViewStyle)activityStyle {
@@ -136,7 +125,6 @@ static char STRING_KEY;
                     [weakSelf removeActivityIndicator];
                 }
      ];
-    
 }
 
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options completed:(SDWebImageCompletedBlock)completedBlock usingActivityIndicatorStyle:(UIActivityIndicatorViewStyle)activityStyle {
@@ -152,7 +140,6 @@ static char STRING_KEY;
                     [weakSelf removeActivityIndicator];
                 }
      ];
-    
 }
 
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletedBlock)completedBlock usingActivityIndicatorStyle:(UIActivityIndicatorViewStyle)activityStyle {
@@ -169,7 +156,6 @@ static char STRING_KEY;
                     [weakSelf removeActivityIndicator];
                 }
      ];
-    
 }
 
 
