@@ -30,7 +30,7 @@ static char TAG_ACTIVITY_INDICATOR;
     objc_setAssociatedObject(self, &TAG_ACTIVITY_INDICATOR, activityIndicator, OBJC_ASSOCIATION_RETAIN);
 }
 
--(void) createActivityIndicatorWithStyle:(UIActivityIndicatorViewStyle) activityStyle {
+- (void)createActivityIndicatorWithStyle:(UIActivityIndicatorViewStyle) activityStyle {
     
     if ([self activityIndicator] == nil) {
         self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:activityStyle];
@@ -52,7 +52,7 @@ static char TAG_ACTIVITY_INDICATOR;
     
 }
 
--(void) removeActivityIndicator {
+- (void)removeActivityIndicator {
     if ([self activityIndicator]) {
         [[self activityIndicator] removeFromSuperview];
     }
@@ -60,7 +60,7 @@ static char TAG_ACTIVITY_INDICATOR;
 
 #pragma mark - Methods
 
--(void) setImageWithURL:(NSURL *)url usingActivityIndicatorStyle:(UIActivityIndicatorViewStyle)activityStyle {
+- (void)setImageWithURL:(NSURL *)url usingActivityIndicatorStyle:(UIActivityIndicatorViewStyle)activityStyle {
     
     [self createActivityIndicatorWithStyle:activityStyle];
     
@@ -73,7 +73,7 @@ static char TAG_ACTIVITY_INDICATOR;
      ];
 }
 
--(void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder usingActivityIndicatorStyle:(UIActivityIndicatorViewStyle)activityStye {
+- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder usingActivityIndicatorStyle:(UIActivityIndicatorViewStyle)activityStye {
     
     [self createActivityIndicatorWithStyle:activityStye];
     
