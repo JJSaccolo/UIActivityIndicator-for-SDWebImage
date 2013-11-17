@@ -54,6 +54,7 @@ static char TAG_ACTIVITY_INDICATOR;
 - (void)removeActivityIndicator {
     if ([self activityIndicator]) {
         [[self activityIndicator] removeFromSuperview];
+        self.activityIndicator = nil;
     }
 }
 
