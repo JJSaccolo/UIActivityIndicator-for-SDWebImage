@@ -14,7 +14,6 @@ static char TAG_ACTIVITY_INDICATOR;
 @interface UIImageView (Private)
 
 -(void)createActivityIndicatorWithStyle:(UIActivityIndicatorViewStyle) activityStyle;
--(void)removeActivityIndicator;
 
 @end
 
