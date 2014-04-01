@@ -44,10 +44,14 @@ static char TAG_ACTIVITY_INDICATOR;
         self.activityIndicator.frame = CGRectMake(x, y, width, height);
         
         self.activityIndicator.hidesWhenStopped = YES;
-        [self addSubview:self.activityIndicator];
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            [self addSubview:self.activityIndicator];
+        });
     }
     
-    [self.activityIndicator startAnimating];
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        [self.activityIndicator startAnimating];
+    });
     
 }
 
