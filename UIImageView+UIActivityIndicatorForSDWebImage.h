@@ -3,7 +3,7 @@
 //  UIActivityIndicator for SDWebImage
 //
 //  Created by Giacomo Saccardo.
-//  Copyright (c) 2013 Giacomo Saccardo. All rights reserved.
+//  Copyright (c) 2014 Giacomo Saccardo. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
