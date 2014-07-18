@@ -36,10 +36,7 @@ static char TAG_ACTIVITY_INDICATOR;
         
         self.activityIndicator.autoresizingMask = UIViewAutoresizingNone;
         
-        CGRect activityIndicatorBounds = self.activityIndicator.bounds;
-        float x = (self.frame.size.width - activityIndicatorBounds.size.width) / 2.0;
-        float y = (self.frame.size.height - activityIndicatorBounds.size.height) / 2.0;
-        self.activityIndicator.frame = CGRectMake(x, y, activityIndicatorBounds.size.width, activityIndicatorBounds.size.height);
+        [self updateActivityIndicatorFrame];
         
         dispatch_async(dispatch_get_main_queue(), ^(void) {
             [self addSubview:self.activityIndicator];
@@ -52,11 +49,26 @@ static char TAG_ACTIVITY_INDICATOR;
     
 }
 
+-(void)updateActivityIndicatorFrame
+{
+    if (self.activityIndicator) {
+        CGRect activityIndicatorBounds = self.activityIndicator.bounds;
+        float x = (self.frame.size.width - activityIndicatorBounds.size.width) / 2.0;
+        float y = (self.frame.size.height - activityIndicatorBounds.size.height) / 2.0;
+        self.activityIndicator.frame = CGRectMake(x, y, activityIndicatorBounds.size.width, activityIndicatorBounds.size.height);
+    }
+}
+
 - (void)removeActivityIndicator {
     if (self.activityIndicator) {
         [self.activityIndicator removeFromSuperview];
         self.activityIndicator = nil;
     }
+}
+
+-(void)layoutSubviews
+{
+    [self updateActivityIndicatorFrame];
 }
 
 #pragma mark - Methods
