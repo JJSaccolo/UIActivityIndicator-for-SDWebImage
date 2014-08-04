@@ -29,7 +29,7 @@ static char TAG_ACTIVITY_INDICATOR;
     objc_setAssociatedObject(self, &TAG_ACTIVITY_INDICATOR, activityIndicator, OBJC_ASSOCIATION_RETAIN);
 }
 
-- (void)addActivityIndicatorWithStyle:(UIActivityIndicatorViewStyle) activityStyle {
+- (void)addActivityIndicatorWithStyle:(UIActivityIndicatorViewStyle)activityStyle {
     
     if (!self.activityIndicator) {
         self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:activityStyle];
@@ -49,8 +49,7 @@ static char TAG_ACTIVITY_INDICATOR;
     
 }
 
--(void)updateActivityIndicatorFrame
-{
+-(void)updateActivityIndicatorFrame {
     if (self.activityIndicator) {
         CGRect activityIndicatorBounds = self.activityIndicator.bounds;
         float x = (self.frame.size.width - activityIndicatorBounds.size.width) / 2.0;
@@ -66,8 +65,9 @@ static char TAG_ACTIVITY_INDICATOR;
     }
 }
 
--(void)layoutSubviews
-{
+-(void)layoutSubviews {
+    [super layoutSubviews];
+
     [self updateActivityIndicatorFrame];
 }
 
