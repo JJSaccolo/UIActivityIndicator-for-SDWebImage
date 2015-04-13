@@ -9,6 +9,15 @@
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 #import <objc/runtime.h>
 
+// checks first if the current call is on the main thread, we don't need to dispatch it then safes times!
+void dispatch_safe_to_main_thread(dispatch_block_t block) {
+    if(![NSThread isMainThread]) {
+        dispatch_async(dispatch_get_main_queue(), block);
+    } else {
+        block();
+    }
+}
+
 static char TAG_ACTIVITY_INDICATOR;
 
 @interface UIImageView (Private)
@@ -38,12 +47,12 @@ static char TAG_ACTIVITY_INDICATOR;
         
         [self updateActivityIndicatorFrame];
         
-        dispatch_async(dispatch_get_main_queue(), ^(void) {
+        dispatch_safe_to_main_thread(^(void) {
             [self addSubview:self.activityIndicator];
         });
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
+    dispatch_safe_to_main_thread(^(void) {
         [self.activityIndicator startAnimating];
     });
     
