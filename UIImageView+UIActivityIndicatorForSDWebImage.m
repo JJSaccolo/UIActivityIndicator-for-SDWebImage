@@ -9,6 +9,15 @@
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 #import <objc/runtime.h>
 
+// checks first if the current call is on the main thread, we don't need to dispatch it then safes times!
+void dispatch_safe_to_main_thread(dispatch_block_t block) {
+    if(![NSThread isMainThread]) {
+        dispatch_async(dispatch_get_main_queue(), block);
+    } else {
+        block();
+    }
+}
+
 static char TAG_ACTIVITY_INDICATOR;
 
 @interface UIImageView (Private)
@@ -33,24 +42,28 @@ static char TAG_ACTIVITY_INDICATOR;
     
     if (!self.activityIndicator) {
         self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:activityStyle];
-        
+        self.activityIndicator.hidesWhenStopped = YES;
         self.activityIndicator.autoresizingMask = UIViewAutoresizingNone;
         
         [self updateActivityIndicatorFrame];
         
-        dispatch_async(dispatch_get_main_queue(), ^(void) {
+        dispatch_safe_to_main_thread(^(void) {
             [self addSubview:self.activityIndicator];
+            [self.activityIndicator startAnimating];
+        });
+    } else {
+        dispatch_safe_to_main_thread(^(void) {
+            if (self.activityIndicator.hidden) {
+                self.activityIndicator.hidden = NO;
+                [self bringSubviewToFront:self.activityIndicator];
+            }
+            [self.activityIndicator startAnimating];
         });
     }
-    
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
-        [self.activityIndicator startAnimating];
-    });
-    
 }
 
 -(void)updateActivityIndicatorFrame {
-    if (self.activityIndicator) {
+    if (self.activityIndicator && !self.activityIndicator.hidden) {
         CGRect activityIndicatorBounds = self.activityIndicator.bounds;
         float x = (self.frame.size.width - activityIndicatorBounds.size.width) / 2.0;
         float y = (self.frame.size.height - activityIndicatorBounds.size.height) / 2.0;
@@ -60,8 +73,8 @@ static char TAG_ACTIVITY_INDICATOR;
 
 - (void)removeActivityIndicator {
     if (self.activityIndicator) {
-        [self.activityIndicator removeFromSuperview];
-        self.activityIndicator = nil;
+        [self.activityIndicator stopAnimating];
+        self.activityIndicator.hidden = YES;
     }
 }
 
@@ -107,10 +120,10 @@ static char TAG_ACTIVITY_INDICATOR;
                   options:options
                  progress:progressBlock
                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageUrl) {
+                    [weakSelf removeActivityIndicator];
                     if (completedBlock) {
                         completedBlock(image, error, cacheType, imageUrl);
                     }
-                    [weakSelf removeActivityIndicator];
                 }
      ];
 }
