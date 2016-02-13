@@ -49,7 +49,7 @@ Well, apparently SDWebImage team [doesn't want](https://github.com/rs/SDWebImage
 
 **And why a category instead of a fork?** Well, I really don't want to keep this repo updated with the (future) new SDWebImage commits (obvious, right?).  
 
-**Ok, but  we could modify our SDWebImage repo with these differences** Yes... unless you're using Cocoapods! If you're doing it you should know that you can't modify a repo, because at the next update, Cocoapods will delete all your work (pulling the new version and removing all your changes). So with a category you can keep your SDWebImage pod updated without problems :) 
+**Ok, but  we could modify our SDWebImage repo with these differences** Yes... unless you're using CocoaPods! If you're doing it you should know that you can't modify a repo, because at the next update, CocoaPods will delete all your work (pulling the new version and removing all your changes). So with a category you can keep your SDWebImage pod updated without problems :) 
 
 
 License
